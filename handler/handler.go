@@ -31,6 +31,16 @@ func SetData(urlData) {
 	}
 }
 
+func goDotEnvVariable(key string) string { 
+ 
+	// load .env file 
+	err := godotenv.Load(".env") 
+	  
+	if err != nil { 
+	  fmt.Print(err) 
+	}
+	return os.Getenv(key)
+}
 
 func SaveData(w http.ResponseWriter, r *http.Request) {
 	url := goDotEnvVariable("urlData")
@@ -38,6 +48,20 @@ func SaveData(w http.ResponseWriter, r *http.Request) {
 	id := vars["id"]
 	request := fmt.Sprintf("%sfdate=%v", url, id)
 	go SetData(request)
+	fmt.Fprint(w, "OK")
 	time.Sleep(5 * time.Second)
-	
+}
+
+func SelectData(w http.ResponseWriter, r *http.Request) {
+	c := &models.Currency{}
+	vars := mux.Vars(r)
+	code := vars["code"]
+	if err := s.db.QueryRow(
+		"SELECT TITLE, CODE, VALUE_V FROM R_CURRENCY WHERE code=$1", 
+		code,
+	).Scan(&c.Fullname, &c.Title, &c.Description); err != nil {
+		return nil, err
+	}
+
+	return c, nil
 }

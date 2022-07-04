@@ -29,7 +29,7 @@ func Connect() {
 	pg_con := fmt.Sprintf("host=%s port=%d user=%s "+
 		"password=%s dbname=%s sslmode=disable",
 		host, port, user, password, dbname)
-	db, err := sql.Open("postgres", pg_con)
+	db, err := sql.Open("mssql", pg_con)
 	if err != nil {
 		panic(err)
 	}
