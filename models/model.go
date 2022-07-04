@@ -1,6 +1,14 @@
 package models
 
-// import "encoding/xml"
+type ResponseResult struct { 
+	Code    int         json:"code" 
+	Message string      json:"message" 
+	Data    interface{} json:"data" 
+   } 
+	
+func OkWithData(message string, data interface{}) *ResponseResult { 
+	return &ResponseResult{0, message, data} 
+   }
 
 type ResponseData struct {
 	Date    string   `xml:"date" json:"date"`
@@ -13,23 +21,3 @@ type Item struct {
 	Description string   `xml:"description" json:"description"`  //331.35
 }
 
-// type ParsingData struct {
-// 	Rates struct {
-// 		XMLName     xml.Name `xml:"rates" json:"-"`
-// 		Generator   string   `xml:"generator" json:"generator"`
-// 		Title       string   `xml:"title" json:"title"`
-// 		Link        string   `xml:"link" json:"link"`
-// 		Description string   `xml:"description" json:"description"`
-// 		Copyright   string   `xml:"copyright" json:"copyright"`
-// 		Date        string   `xml:"date" json:"date"`
-// 		Item        struct {
-// 			XMLName     xml.Name `xml:"item" json:"-"`
-// 			Fullname    string   `xml:"fullname" json:"fullname"`
-// 			Title       string   `xml:"title" json:"title"`
-// 			Description string   `xml:"description" json:"description"`
-// 			Quant       string   `xml:"quant" json:"quant"`
-// 			Index       string   `xml:"index" json:"index"`
-// 			Change      string   `xml:"change" json:"change"`
-// 		}
-// 	}
-// }
